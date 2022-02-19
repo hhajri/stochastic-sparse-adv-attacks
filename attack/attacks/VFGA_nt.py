@@ -130,13 +130,18 @@ def VFGA_untargeted(model, input_, labels, labels_out, nb_classes, clip_min=0., 
             x_modif = x_modif.view(-1, depth, width, heigth)
 
             # Computing the next probabilities and next labels
-            next_proba_plus = torch.ones(nb_input, sampling, nb_classes, device=device).view(-1, nb_classes)
-            next_proba_plus[leq_clipmax.view(-1).bool()] =  model(x_modif_plus[leq_clipmax.view(-1).bool()])
+            
+            
+            next_proba_plus = torch.zeros(nb_input, sampling, nb_classes, device=device).view(-1, nb_classes)
+            next_proba_plus.scatter_(1, pred.repeat_interleave(sampling).unsqueeze(1), 1)
+            next_proba_plus[leq_clipmax.ravel()] = model(x_modif_plus[leq_clipmax.ravel()])
             next_proba_plus = next_proba_plus.view(nb_input * sampling, nb_classes)
 
-            next_proba_minus = torch.ones(nb_input, sampling, nb_classes, device=device).view(-1, nb_classes)
-            next_proba_minus[geq_clipmin.view(-1).bool()] =  model(x_modif_minus[geq_clipmin.view(-1).bool()])
+            next_proba_minus = torch.zeros(nb_input, sampling, nb_classes, device=device).view(-1, nb_classes)
+            next_proba_minus.scatter_(1, pred.repeat_interleave(sampling).unsqueeze(1), 1)
+            next_proba_minus[geq_clipmin.ravel()] = model(x_modif_minus[geq_clipmin.ravel()])
             next_proba_minus = next_proba_minus.view(nb_input * sampling, nb_classes)
+                    
             
             next_proba = torch.cat([next_proba_plus, next_proba_minus], dim=1).view(nb_input, 2 * sampling, nb_classes)
             next_pred = torch.argmax(next_proba, axis=2).type(torch.int64)
