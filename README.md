@@ -1,6 +1,6 @@
 # [Stochastic Sparse Adversarial Attacks](https://arxiv.org/abs/2011.12423)
 
-Manon Césaire, Hatem Hajri, Sylvain Lamprier, Patrick Gallinari\
+Manon Césaire, Lucas Schott, Hatem Hajri, Sylvain Lamprier, Patrick Gallinari\
 *IRT SystemX, LIP6 - Sorbonne University* 
 
 
