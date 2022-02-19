@@ -131,12 +131,14 @@ If you want to see the run time comparison, you should generate adversarial samp
 ## Citation:
 
 ```
-@misc{cesaire2021stochastic,
-      title={Stochastic sparse adversarial attacks}, 
-      author={Manon Césaire and Hatem Hajri and Sylvain Lamprier and Patrick Gallinari},
-      year={2021},
-      eprint={2011.12423},
-      archivePrefix={arXiv},
-      primaryClass={cs.LG}
-}
+@INPROCEEDINGS{9643161,
+  author={Césaire, Manon and Schott, Lucas and Hajri, Hatem and Lamprier, Sylvain and Gallinari, Patrick},
+  booktitle={2021 IEEE 33rd International Conference on Tools with Artificial Intelligence (ICTAI)}, 
+  title={Stochastic sparse adversarial attacks}, 
+  year={2021},
+  volume={},
+  number={},
+  pages={1247-1254},
+  doi={10.1109/ICTAI52525.2021.00198}}
+
 ```
