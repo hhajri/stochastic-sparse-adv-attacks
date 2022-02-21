@@ -133,10 +133,12 @@ def VFGA_targeted(model, input_, labels, labels_out, nb_classes, clip_min=0., cl
 
             # Computing the next probabilities and next labels
             next_proba_plus = torch.zeros(nb_input, sampling, nb_classes, device=device).view(-1, nb_classes)
+            next_proba_plus.scatter_(1, pred.repeat_interleave(sampling).unsqueeze(1), 1)
             next_proba_plus[leq_clipmax.view(-1).bool()] =  model(x_modif_plus[leq_clipmax.view(-1).bool()])
             next_proba_plus = next_proba_plus.view(nb_input * sampling, nb_classes)
 
             next_proba_minus = torch.zeros(nb_input, sampling, nb_classes, device=device).view(-1, nb_classes)
+            next_proba_minus.scatter_(1, pred.repeat_interleave(sampling).unsqueeze(1), 1)
             next_proba_minus[geq_clipmin.view(-1).bool()] =  model(x_modif_minus[geq_clipmin.view(-1).bool()])
             next_proba_minus = next_proba_minus.view(nb_input * sampling, nb_classes)
             
