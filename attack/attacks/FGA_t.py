@@ -108,7 +108,9 @@ def FGA_targeted(model, input_, labels, labels_out, nb_classes, clip_min=0., cli
             # In leq_clipmax, we have 1 for the images on which we want to apply model, 0 for the others
             # Computing the next probabilities and next labels
             leq_clipmax = leq_clipmax.view(-1).to(device)
+            
             next_proba = torch.zeros(nb_input, sampling, nb_classes, device=device).view(-1, nb_classes)
+            next_proba.scatter_(1, pred.repeat_interleave(sampling).unsqueeze(1), 1)
             
             next_proba[leq_clipmax.bool()] =  model(x_modif[leq_clipmax.bool()])
             next_proba = next_proba.view(nb_input, sampling, nb_classes)         
